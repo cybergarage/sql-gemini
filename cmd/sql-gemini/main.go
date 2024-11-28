@@ -1,4 +1,4 @@
-// Copyright (C) 2024 The go-mysql Authors. All rights reserved.
+// Copyright (C) 2024 The sql-gemini Authors. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,101 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/*
-go-sqlserver is an example of a compatible MySQL and PostgreSQL server implementation using go-mysql and go-postgresql.
-
-	NAME
-	 go-sqlserver
-
-	SYNOPSIS
-	 go-mysqld [OPTIONS]
-
-	OPTIONS
-	-v      : Enable verbose output.
-	-p      : Enable profiling.
-
-	RETURN VALUE
-	  Return EXIT_SUCCESS or EXIT_FAILURE
-*/
 package main
 
 import (
-	"flag"
-	"log"
-	"net/http"
 	"os"
-	"os/signal"
-	"syscall"
+	"time"
 
-	clog "github.com/cybergarage/go-logger/log"
-	"github.com/cybergarage/go-sqlserver/sql"
+	"github.com/cybergarage/sql-gemini/gemini"
+	"github.com/urfave/cli/v2"
 )
 
 const (
-	ProgramName = " go-sqlserver"
+	ProgramName = "sql-gemini"
 )
 
 func main() {
-	isDebugEnabled := flag.Bool("debug", false, "enable debugging log output")
-	isProfileEnabled := flag.Bool("profile", false, "enable profiling server")
-	flag.Parse()
-
-	logLevel := clog.LevelTrace
-	if *isDebugEnabled {
-		logLevel = clog.LevelDebug
-	}
-	clog.SetSharedLogger(clog.NewStdoutLogger(logLevel))
-
-	if *isProfileEnabled {
-		go func() {
-			// nolint: gosec
-			log.Println(http.ListenAndServe("localhost:6060", nil))
-		}()
+	app := &cli.App{
+		Name:     ProgramName,
+		Version:  gemini.Version,
+		Compiled: time.Now(),
 	}
 
-	// Start server
-
-	server := sql.NewServer()
-	err := server.Start()
+	err := app.Run(os.Args)
 	if err != nil {
-		log.Printf("%s couldn't be started (%s)", ProgramName, err.Error())
 		os.Exit(1)
 	}
-
-	sigCh := make(chan os.Signal, 1)
-
-	signal.Notify(sigCh,
-		os.Interrupt,
-		syscall.SIGHUP,
-		syscall.SIGINT,
-		syscall.SIGTERM)
-
-	exitCh := make(chan int)
-
-	go func() {
-		for {
-			s := <-sigCh
-			switch s {
-			case syscall.SIGHUP:
-				log.Printf("Caught SIGHUP, restarting...")
-				err = server.Restart()
-				if err != nil {
-					log.Printf("%s couldn't be restarted (%s)", ProgramName, err.Error())
-					os.Exit(1)
-				}
-			case syscall.SIGINT, syscall.SIGTERM:
-				log.Printf("Caught %s, stopping...", s.String())
-				err = server.Stop()
-				if err != nil {
-					log.Printf("%s couldn't be stopped (%s)", ProgramName, err.Error())
-					os.Exit(1)
-				}
-				exitCh <- 0
-			}
-		}
-	}()
-
-	code := <-exitCh
-
-	os.Exit(code)
 }
