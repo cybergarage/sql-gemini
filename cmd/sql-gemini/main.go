@@ -26,11 +26,34 @@ const (
 	ProgramName = "sql-gemini"
 )
 
+type database struct {
+	Host string
+	Type string
+}
+
 func main() {
+	oracle := database{}
+
 	app := &cli.App{
 		Name:     ProgramName,
 		Version:  gemini.Version,
 		Compiled: time.Now(),
+		Flags: []cli.Flag{
+			&cli.StringFlag{
+				Name:        "oracle-host",
+				Value:       "localhost",
+				Usage:       "Oracle database host",
+				Destination: &oracle.Host,
+			},
+			&cli.StringFlag{
+				Name:        "oracle-type",
+				Usage:       "Oracle database type",
+				Destination: &oracle.Type,
+			},
+		},
+		Action: func(cCtx *cli.Context) error {
+			return nil
+		},
 	}
 
 	err := app.Run(os.Args)
