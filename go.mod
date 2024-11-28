@@ -1,3 +1,3 @@
-module github.com/cybergarage/go-gemini
+module github.com/cybergarage/sql-gemini
 go 1.22.0
 
