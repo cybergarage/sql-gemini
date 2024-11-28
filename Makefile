@@ -20,12 +20,12 @@ GOBIN := $(shell go env GOPATH)/bin
 PATH := $(GOBIN):$(PATH)
 
 GIT_ROOT=github.com/cybergarage
-PRODUCT_NAME=go-gemini
+PRODUCT_NAME=sql-gemini
 MODULE_ROOT=${GIT_ROOT}/${PRODUCT_NAME}
 
 PKG_NAME=gemini
 PKG_VER=$(shell git describe --abbrev=0 --tags)
-PKG_COVER=sql-${PKG_NAME}-cover
+PKG_COVER=${PRODUCT_NAME}-cover
 PKG_SRC_ROOT=${PKG_NAME}
 PKG=${MODULE_ROOT}/${PKG_SRC_ROOT}
 
