@@ -26,13 +26,10 @@ const (
 	ProgramName = "sql-gemini"
 )
 
-type database struct {
-	Host string
-	Type string
-}
-
 func main() {
-	oracle := database{}
+	config := gemini.Config{
+		Oracle: gemini.Database{},
+	}
 
 	app := &cli.App{
 		Name:     ProgramName,
@@ -43,12 +40,17 @@ func main() {
 				Name:        "oracle-host",
 				Value:       "localhost",
 				Usage:       "Oracle database host",
-				Destination: &oracle.Host,
+				Destination: &config.Oracle.Host,
 			},
 			&cli.StringFlag{
 				Name:        "oracle-type",
 				Usage:       "Oracle database type",
-				Destination: &oracle.Type,
+				Destination: &config.Oracle.Type,
+			},
+			&cli.StringFlag{
+				Name:        "oracle-image",
+				Usage:       "Oracle database docker image",
+				Destination: &config.Oracle.Image,
 			},
 		},
 		Action: func(cCtx *cli.Context) error {
