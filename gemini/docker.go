@@ -15,6 +15,10 @@
 package gemini
 
 import (
+	"context"
+
+	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/api/types/image"
 	"github.com/docker/docker/client"
 )
 
@@ -31,4 +35,46 @@ func NewDocker() (*Docker, error) {
 	}
 
 	return &Docker{client: client}, nil
+}
+
+// Run runs a Docker container with the specified image name
+func (d *Docker) Run(imageName string) (string, error) {
+	ctx := context.Background()
+
+	// Pull the specified Docker image from DockerHub
+	_, err := d.client.ImagePull(ctx, imageName, image.PullOptions{})
+	if err != nil {
+		return "", err
+	}
+
+	// List all running containers
+	containers, err := d.client.ContainerList(ctx, container.ListOptions{All: true})
+	if err != nil {
+		return "", err
+	}
+
+	// Stop and remove all running containers
+	for _, c := range containers {
+		if err := d.client.ContainerStop(ctx, c.ID, container.StopOptions{}); err != nil {
+			return "", err
+		}
+		if err := d.client.ContainerRemove(ctx, c.ID, container.RemoveOptions{}); err != nil {
+			return "", err
+		}
+	}
+
+	// Create a container from the pulled image
+	resp, err := d.client.ContainerCreate(ctx, &container.Config{
+		Image: imageName,
+	}, nil, nil, nil, "")
+	if err != nil {
+		return "", err
+	}
+
+	// Start the created container
+	if err := d.client.ContainerStart(ctx, resp.ID, container.StartOptions{}); err != nil {
+		return "", err
+	}
+
+	return resp.ID, nil
 }
