@@ -33,6 +33,7 @@ func main() {
 
 	app := &cli.App{
 		Name:     ProgramName,
+		Usage:    "A oracle testing tool for SQL databases",
 		Version:  gemini.Version,
 		Compiled: time.Now(),
 		Flags: []cli.Flag{
@@ -54,7 +55,13 @@ func main() {
 			},
 		},
 		Action: func(cCtx *cli.Context) error {
-			return nil
+			g, err := gemini.NewGemini(
+				gemini.WithGeminiConfig(&config),
+			)
+			if err != nil {
+				return err
+			}
+			return g.Run()
 		},
 	}
 

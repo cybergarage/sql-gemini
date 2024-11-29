@@ -15,4 +15,34 @@
 package gemini
 
 type Gemini struct {
+	*Config
+}
+
+// GeminiOption is a function that configures a Gemini instance
+type GeminiOption func(*Gemini) error
+
+// WithGeminiConfig configures a Gemini instance with the specified Config
+func WithGeminiConfig(cfg *Config) GeminiOption {
+	return func(g *Gemini) error {
+		g.Config = cfg
+		return nil
+	}
+}
+
+// NewGemini creates a new Gemini instance
+func NewGemini(opts ...GeminiOption) (*Gemini, error) {
+	gemini := &Gemini{
+		Config: &Config{},
+	}
+	for _, opt := range opts {
+		if err := opt(gemini); err != nil {
+			return nil, err
+		}
+	}
+	return gemini, nil
+}
+
+// Run runs the Gemini instance
+func (g *Gemini) Run() error {
+	return nil
 }

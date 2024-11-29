@@ -12,11 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package geminitest
+package gemini
 
 import (
 	"testing"
+
+	"github.com/cybergarage/sql-gemini/gemini"
 )
 
 func TestGemini(t *testing.T) {
+	gemini.NewGemini()
 }
