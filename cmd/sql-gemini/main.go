@@ -27,9 +27,7 @@ const (
 )
 
 func main() {
-	config := gemini.Config{
-		Oracle: gemini.Database{},
-	}
+	config := gemini.NewConfig()
 
 	app := &cli.App{
 		Name:     ProgramName,
@@ -38,25 +36,46 @@ func main() {
 		Compiled: time.Now(),
 		Flags: []cli.Flag{
 			&cli.StringFlag{
+				Name:        "oracle-type",
+				Usage:       "Oracle database type",
+				Destination: &config.Type,
+			},
+			&cli.StringFlag{
 				Name:        "oracle-host",
 				Value:       "localhost",
 				Usage:       "Oracle database host",
 				Destination: &config.Oracle.Host,
 			},
-			&cli.StringFlag{
-				Name:        "oracle-type",
-				Usage:       "Oracle database type",
-				Destination: &config.Oracle.Type,
+			&cli.IntFlag{
+				Name:        "oracle-port",
+				Usage:       "Oracle database port",
+				Destination: &config.Oracle.Port,
 			},
 			&cli.StringFlag{
 				Name:        "oracle-image",
 				Usage:       "Oracle database docker image",
 				Destination: &config.Oracle.Image,
 			},
+			&cli.StringFlag{
+				Name:        "test-host",
+				Value:       "localhost",
+				Usage:       "Test database host",
+				Destination: &config.Test.Host,
+			},
+			&cli.IntFlag{
+				Name:        "test-port",
+				Usage:       "Test database port",
+				Destination: &config.Test.Port,
+			},
+			&cli.StringFlag{
+				Name:        "oracle-image",
+				Usage:       "Test database docker image",
+				Destination: &config.Test.Image,
+			},
 		},
 		Action: func(cCtx *cli.Context) error {
 			g, err := gemini.NewGemini(
-				gemini.WithGeminiConfig(&config),
+				gemini.WithGeminiConfig(config),
 			)
 			if err != nil {
 				return err

@@ -14,21 +14,18 @@
 
 package gemini
 
-const (
-	// MySQL is the MySQL database type
-	MySQL = "mysql"
-	// PostgreSQL is the PostgreSQL database type
-	PostgreSQL = "postgres"
-)
-
-// Database is the configuration for the database
-type Database struct {
-	Host  string
-	Type  string
-	Image string
-}
-
 // Config is the configuration for the sql-gemini client
 type Config struct {
+	Type   string
 	Oracle Database
+	Test   Database
+}
+
+// NewConfig creates a new configuration
+func NewConfig() *Config {
+	return &Config{
+		Type:   "",
+		Oracle: NewDatabase(),
+		Test:   NewDatabase(),
+	}
 }
