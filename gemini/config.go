@@ -14,11 +14,13 @@
 
 package gemini
 
+import "fmt"
+
 // Config is the configuration for the sql-gemini client
 type Config struct {
 	Type   string
-	Oracle Database
-	Test   Database
+	Oracle *Database
+	Test   *Database
 }
 
 // NewConfig creates a new configuration
@@ -28,4 +30,18 @@ func NewConfig() *Config {
 		Oracle: NewDatabase(),
 		Test:   NewDatabase(),
 	}
+}
+
+// Validate checks if all the configuration variables are set correctly
+func (c *Config) Validate() error {
+	if c.Type == "" {
+		return fmt.Errorf("oracle type is not set")
+	}
+	if err := c.Oracle.Validate(); err != nil {
+		return fmt.Errorf("oracle configuration is not valid: %v", err)
+	}
+	if err := c.Test.Validate(); err != nil {
+		return fmt.Errorf("test configuration is not valid: %v", err)
+	}
+	return nil
 }

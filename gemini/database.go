@@ -14,6 +14,8 @@
 
 package gemini
 
+import "fmt"
+
 const (
 	// MySQL is the MySQL database type
 	MySQL = "mysql"
@@ -30,11 +32,28 @@ type Database struct {
 }
 
 // NewDatabase creates a new database configuration
-func NewDatabase() Database {
-	return Database{
+func NewDatabase() *Database {
+	return &Database{
 		Host:  "",
 		Type:  "",
 		Image: "",
 		Port:  0,
 	}
+}
+
+// Validate checks if all the configuration variables are set correctly
+func (c *Database) Validate() error {
+	if c.Host == "" {
+		return fmt.Errorf("host is not set")
+	}
+	if c.Type == "" {
+		return fmt.Errorf("type is not set")
+	}
+	if c.Image == "" {
+		return fmt.Errorf("image is not set")
+	}
+	if c.Port == 0 {
+		return fmt.Errorf("port is not set")
+	}
+	return nil
 }
