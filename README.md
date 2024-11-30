@@ -36,5 +36,3 @@ By following these steps, `sql-gemini` helps users verify that their application
   - [Barr, Earl T., et al. "The oracle problem in software testing: A survey." IEEE transactions on software engineering 41.5 (2014): 507-525.](https://ieeexplore.ieee.org/abstract/document/6963470)
   - [Shahamiri, Seyed Reza, Wan Mohd Nasir Wan Kadir, and Siti Zaiton Mohd-Hashim. "A comparative study on automated software test oracle methods." 2009 fourth international conference on software engineering advances. IEEE, 2009](https://ieeexplore.ieee.org/abstract/document/5298471/)
 - [Project Gemini: An Open Source Automated Random Testing Suite for ScyllaDB and Cassandra Clusters - ScyllaDB](https://www.scylladb.com/2019/12/11/project-gemini-an-open-source-automated-random-testing-suite-for-scylla-and-cassandra-clusters/)
-
-https://github.com/cybergarage/sql-gemini/actions
