@@ -25,6 +25,9 @@ type GeminiOption func(*Gemini) error
 func WithGeminiConfig(cfg *Config) GeminiOption {
 	return func(g *Gemini) error {
 		g.Config = cfg
+		if err := g.Config.Validate(); err != nil {
+			return err
+		}
 		return nil
 	}
 }
@@ -36,7 +39,7 @@ func NewGemini(opts ...GeminiOption) (*Gemini, error) {
 	}
 	for _, opt := range opts {
 		if err := opt(gemini); err != nil {
-			return nil, err
+			return gemini, err
 		}
 	}
 	return gemini, nil
