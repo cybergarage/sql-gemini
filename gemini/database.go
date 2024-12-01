@@ -14,13 +14,20 @@
 
 package gemini
 
-import "fmt"
+import (
+	"fmt"
+)
 
 const (
 	// MySQL is the MySQL database type
 	MySQL = "mysql"
 	// PostgreSQL is the PostgreSQL database type
 	PostgreSQL = "postgres"
+)
+
+const (
+	MySQLDefaultPort      = 3306
+	PostgreSQLDefaultPort = 5432
 )
 
 // SupportedOrableTypes returns the list of supported database types
@@ -57,18 +64,22 @@ func NewDatabase() *Database {
 }
 
 // Validate checks if all the configuration variables are set correctly
-func (c *Database) Validate() error {
-	if c.Host == "" {
+func (config *Database) Validate() error {
+	if config.Host == "" {
 		return fmt.Errorf("host is not set")
 	}
-	if c.Type == "" {
+	if config.Type == "" {
 		return fmt.Errorf("type is not set")
 	}
-	if c.Image == "" {
-		return fmt.Errorf("image is not set")
-	}
-	if c.Port == 0 {
-		return fmt.Errorf("port is not set")
+	if config.Port == 0 {
+		switch config.Type {
+		case MySQL:
+			config.Port = MySQLDefaultPort
+		case PostgreSQL:
+			config.Port = PostgreSQLDefaultPort
+		default:
+			return fmt.Errorf("port is not set")
+		}
 	}
 	return nil
 }
