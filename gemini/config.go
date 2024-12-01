@@ -39,6 +39,11 @@ func (config *Config) Validate() error {
 	if config.Type == "" {
 		return fmt.Errorf("oracle type is not set")
 	}
+
+	if !IsSupportedOrableType(config.Type) {
+		return fmt.Errorf("oracle type (%s) is not supported", config.Type)
+	}
+
 	config.Oracle.Type = config.Type
 	config.Test.Type = config.Type
 	if err := config.Oracle.Validate(); err != nil {

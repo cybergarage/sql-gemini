@@ -23,6 +23,21 @@ const (
 	PostgreSQL = "postgres"
 )
 
+// SupportedOrableTypes returns the list of supported database types
+func SupportedOrableTypes() []string {
+	return []string{MySQL, PostgreSQL}
+}
+
+// IsSupportedOrableType checks if the given type is a supported database type
+func IsSupportedOrableType(t string) bool {
+	for _, ot := range SupportedOrableTypes() {
+		if ot == t {
+			return true
+		}
+	}
+	return false
+}
+
 // Database is the configuration for the database
 type Database struct {
 	Host  string
