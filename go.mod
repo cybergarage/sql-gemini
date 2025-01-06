@@ -3,7 +3,7 @@ module github.com/cybergarage/sql-gemini
 go 1.22.0
 
 require (
-	github.com/cybergarage/go-sqltest v1.4.2
+	github.com/cybergarage/go-sqltest v1.4.3
 	github.com/docker/docker v27.3.1+incompatible
 	github.com/urfave/cli/v2 v2.27.5
 )
