@@ -1,6 +1,6 @@
 module github.com/cybergarage/sql-gemini
 
-go 1.23
+go 1.24
 
 require (
 	github.com/cybergarage/go-sqltest v1.4.3
