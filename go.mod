@@ -13,7 +13,7 @@ require (
 	github.com/containerd/log v0.1.0 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.5 // indirect
 	github.com/cybergarage/go-logger v1.3.11 // indirect
-	github.com/cybergarage/go-safecast v1.2.2 // indirect
+	github.com/cybergarage/go-safecast v1.3.3 // indirect
 	github.com/distribution/reference v0.6.0 // indirect
 	github.com/docker/go-connections v0.5.0 // indirect
 	github.com/docker/go-units v0.5.0 // indirect

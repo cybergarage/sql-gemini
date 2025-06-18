@@ -10,8 +10,8 @@ github.com/cpuguy83/go-md2man/v2 v2.0.5 h1:ZtcqGrnekaHpVLArFSe4HK5DoKx1T0rq2DwVB
 github.com/cpuguy83/go-md2man/v2 v2.0.5/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
 github.com/cybergarage/go-logger v1.3.11 h1:NwnC7cD/IDkdwBYhSODXaMEBmAu3c/jK4Q2XDsg1fno=
 github.com/cybergarage/go-logger v1.3.11/go.mod h1:SU5vzAFJOTs89JXk+Jn89RaNmcR07parcJgnW4e8aDw=
-github.com/cybergarage/go-safecast v1.2.2 h1:aUHIRf7RSx8w0u/2VMXaZcroRhLFe3Jw0Bif96S6eD8=
-github.com/cybergarage/go-safecast v1.2.2/go.mod h1:bv+1ykIikB3xYPJFqu3ZsY3xfyEVQesq8+biHX3ZMWQ=
+github.com/cybergarage/go-safecast v1.3.3 h1:ShXzs7PLDsomNeueg65IyPPEc+cw5QLd10+/JI+c2mI=
+github.com/cybergarage/go-safecast v1.3.3/go.mod h1:flFLUrI49kNK+U7ZeQDQxbaxxQyFVQGKpT7KYN3A4ew=
 github.com/cybergarage/go-sqltest v1.4.3 h1:nWzlz0yVlqbdnBT6kYStN9P+70tcwTJeelWX1YXCxBM=
 github.com/cybergarage/go-sqltest v1.4.3/go.mod h1:SRIIHpeCehkJHqcxr9+0jnw6unM2N0wEEE+x/SdE87o=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
